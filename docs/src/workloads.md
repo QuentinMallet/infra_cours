@@ -33,9 +33,20 @@ own.
    - `metadata.name`
    - `spec.source.path` (point it at `gitops/workloads/my-app`)
    - `spec.destination.namespace`
+   - keep `metadata.finalizers` as-is (see below)
 3. Commit and push to the tracked revision. Argo CD notices the new file
    under `gitops/apps/` and creates the Application; from there its own
    sync policy takes over.
+
+## Removing a workload
+
+Delete its `gitops/apps/*.yaml` file and commit/push. Every Application in
+this template carries `metadata.finalizers:
+[resources-finalizer.argocd.argoproj.io]`, so deleting the Application
+manifest makes Argo CD cascade-delete the resources it deployed (its
+namespace, Deployment, Service, ...) before removing the Application
+itself — no manual `kubectl delete` needed. Keep this finalizer on any new
+Application you add, for the same reason.
 
 ## Keep workloads ClusterIP-only, no PVCs
 
