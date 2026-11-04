@@ -33,8 +33,11 @@ destroy:
 
 # Write ./kubeconfig from the tofu output.
 kubeconfig:
-    tofu -chdir=tofu/scaleway output -raw kubeconfig > kubeconfig
-    chmod 600 kubeconfig
+    #!/usr/bin/env sh
+    set -eu
+    umask 077
+    tofu -chdir=tofu/scaleway output -raw kubeconfig > kubeconfig.tmp
+    mv kubeconfig.tmp kubeconfig
     echo "export KUBECONFIG=$(pwd)/kubeconfig"
 
 # Point every Argo CD source at this clone's repo (default: the origin remote, as https).
