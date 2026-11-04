@@ -20,6 +20,13 @@ resource "scaleway_k8s_cluster" "main" {
   cni                         = "cilium"
   delete_additional_resources = true
   private_network_id          = scaleway_vpc_private_network.main.id
+
+  # "latest" moves when Scaleway ships a new release; without this a routine
+  # `just up` mid-semester would trigger a control-plane upgrade. To upgrade
+  # on purpose, do it from the Scaleway console/CLI between classes.
+  lifecycle {
+    ignore_changes = [version]
+  }
 }
 
 # The node pool scales to 0 between classes: Kapsule's mutualized control
@@ -40,10 +47,8 @@ resource "scaleway_k8s_pool" "main" {
   max_size    = max(var.node_count, 1)
   autoscaling = false
   autohealing = true
-
-  lifecycle {
-    create_before_destroy = true
-  }
+  # No create_before_destroy: with a fixed name the replacement pool would
+  # collide with the old one (the API rejects duplicate pool names).
 }
 
 module "argocd" {
