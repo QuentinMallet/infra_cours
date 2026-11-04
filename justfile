@@ -56,7 +56,7 @@ password:
 
 # Bring up a local kind cluster running the same argocd module.
 kind-up name="class-local":
-    kind get clusters | grep -qx "{{ name }}" || kind create cluster --name "{{ name }}" --kubeconfig tofu/kind/kubeconfig
+    if kind get clusters | grep -qx "{{ name }}"; then kind export kubeconfig --name "{{ name }}" --kubeconfig tofu/kind/kubeconfig; else kind create cluster --name "{{ name }}" --kubeconfig tofu/kind/kubeconfig; fi
     tofu -chdir=tofu/kind init -input=false
     tofu -chdir=tofu/kind apply -var cluster_name="{{ name }}"
     @echo "export KUBECONFIG=$(pwd)/tofu/kind/kubeconfig"

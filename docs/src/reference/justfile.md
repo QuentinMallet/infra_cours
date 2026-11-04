@@ -15,7 +15,7 @@ All recipes run from the repository root; `just` itself is provided by the
 | `just retarget url=<origin, as https>` | rewrites every occurrence of the old `repoURL` across `gitops/apps/*.yaml`, `tofu/**/*.tf`, `tofu/**/*.example`, `tofu/**/*.tfvars` to `url` | see below |
 | `just ui` | `kubectl -n argocd port-forward svc/argocd-server 8080:80` | Argo CD UI at `http://localhost:8080` |
 | `just password` | reads and base64-decodes the `argocd-initial-admin-secret` Secret | initial `admin` password |
-| `just kind-up name="class-local"` | `kind create cluster` (if absent) + `tofu -chdir=tofu/kind init`/`apply` | see [Local testing with kind](../local-testing.md) |
+| `just kind-up name="class-local"` | `kind create cluster` (if absent) or `kind export kubeconfig` (if it already exists) + `tofu -chdir=tofu/kind init`/`apply` | see [Local testing with kind](../local-testing.md) |
 | `just kind-down name="class-local"` | `kind delete cluster` + removes `tofu/kind`'s local state/kubeconfig | |
 | `just lint` | `tofu fmt -check`, `tofu validate` on every root/module, `kustomize build \| kubeconform` on every workload, `kubeconform` on `gitops/apps/*.yaml` | CI-style check, no cluster needed |
 
