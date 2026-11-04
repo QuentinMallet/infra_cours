@@ -26,18 +26,47 @@ provider block with hardcoded credentials.
 ## State bucket (Object Storage)
 
 OpenTofu state lives in an S3-compatible Scaleway Object Storage bucket, not
-on disk:
-
-```sh
-scw object bucket create name=my-class-tfstate region=fr-par
-```
-
-The `s3` backend (`tofu/scaleway/versions.tf`) additionally wants AWS-style
-env var names, set to the *same* Scaleway key pair:
+on disk. The `s3` backend (`tofu/scaleway/versions.tf`) talks to it with
+AWS-style env var names, set to the *same* Scaleway key pair:
 
 ```sh
 export AWS_ACCESS_KEY_ID=$SCW_ACCESS_KEY
 export AWS_SECRET_ACCESS_KEY=$SCW_SECRET_KEY
+```
+
+**Project gotcha:** the S3 API ignores `SCW_DEFAULT_PROJECT_ID` — a bucket
+always lands in the API key's *preferred project*, and `scw object bucket
+create` has no `--project-id` flag to steer it elsewhere. To put the state
+bucket in a specific project instead, append the project ID to the access
+key, for both the bucket creation and the `s3` backend above:
+`AWS_ACCESS_KEY_ID="$SCW_ACCESS_KEY@<project-id>"`. That `@<project-id>`
+suffix only works through an AWS-compatible client, so create the bucket
+with the `aws` CLI rather than `scw object bucket create`:
+
+```sh
+nix shell nixpkgs#awscli2        # awscli2 isn't in this flake's devShell
+
+export AWS_ACCESS_KEY_ID="$SCW_ACCESS_KEY@<project-id>"
+export AWS_SECRET_ACCESS_KEY=$SCW_SECRET_KEY
+
+aws --endpoint-url https://s3.fr-par.scw.cloud --region fr-par \
+  s3 mb s3://my-class-tfstate
+aws --endpoint-url https://s3.fr-par.scw.cloud --region fr-par \
+  s3api put-bucket-versioning --bucket my-class-tfstate \
+  --versioning-configuration Status=Enabled
+```
+
+The alternative is setting the API key's preferred project in the
+Scaleway console — then plain `scw object bucket create
+name=my-class-tfstate region=fr-par` lands in that project, and the
+non-suffixed `AWS_ACCESS_KEY_ID` above is enough for the backend too.
+
+Recommended either way: a dedicated Scaleway project per class, so the
+state bucket and the cluster it describes live in the same place —
+
+```sh
+scw account project create name=my-class
+export SCW_DEFAULT_PROJECT_ID=...                # the project ID just printed
 ```
 
 ## backend.hcl and terraform.tfvars

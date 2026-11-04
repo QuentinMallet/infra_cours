@@ -8,7 +8,7 @@
 | `region` | `fr-par` | Scaleway region |
 | `zone` | `fr-par-1` | Scaleway zone |
 | `node_type` | `DEV1-M` | Instance commercial type used by the node pool |
-| `node_count` | `1` | Number of nodes in the pool (`>= 0`); `0` scales the pool down between classes |
+| `node_count` | `1` | Number of nodes in the pool (`>= 0`); `0` deletes the pool (Kapsule rejects a pool `size` of `0`) — recreated on the next apply with `node_count > 0` |
 | `k8s_version` | `null` | Kubernetes version; `null` resolves to the latest version Scaleway offers |
 | `repo_url` | `https://github.com/QuentinMallet/infra_cours.git` | Git repository Argo CD syncs Applications from — rewritten by `just retarget` |
 | `target_revision` | `master` | Git revision Argo CD tracks |

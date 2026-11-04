@@ -39,7 +39,7 @@ own.
 
 ## Keep workloads ClusterIP-only, no PVCs
 
-A node pool scaled to 0 between classes still pays for a `LoadBalancer`
+A deleted node pool between classes still pays for a `LoadBalancer`
 Service or a block-storage `PersistentVolumeClaim` — that's exactly what
 this template is built to avoid (see [Cost notes](reference/costs.md)).
 Keep every new workload `ClusterIP`-only with no PVC, the same way

@@ -1,14 +1,16 @@
 # Cost notes
 
-- A node pool scaled to `node_count = 0` has **no Instance cost**.
-  `scaleway_k8s_pool.main` allows `size = 0` (`tofu/scaleway/main.tf` sets
-  `min_size = 0` explicitly — left at its default, the provider would set
-  `min_size = 1` whenever `size > 0`, which would block ever reaching 0).
+- `node_count = 0` has **no Instance cost** because the pool is deleted
+  entirely, not resized to 0: Kapsule rejects a pool `size` of `0` ("A
+  kapsule cluster can't have less than 1 nodes"), so
+  `scaleway_k8s_pool.main` (`tofu/scaleway/main.tf`) only exists when
+  `node_count > 0`, and `just down` removes it.
 - Kapsule's control plane is **free and mutualized** regardless of pool
-  size — scaling to 0 does not lose the cluster or the Argo CD install, and
-  the control plane keeps running and billing nothing in between classes.
+  size — deleting the pool does not lose the cluster or the Argo CD
+  install (etcd is untouched), and the control plane keeps running and
+  billing nothing in between classes.
 - `LoadBalancer` Services and block-storage `PersistentVolumeClaim`s **keep
-  billing even while the node pool is at 0**. That's why:
+  billing even with no node pool at all**. That's why:
   - Argo CD's own server is installed as `ClusterIP`
     (`tofu/modules/argocd/main.tf`), reached only via `kubectl
     port-forward` / `just ui` — never a LoadBalancer or Ingress;

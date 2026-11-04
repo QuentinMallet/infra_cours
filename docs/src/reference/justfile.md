@@ -7,9 +7,9 @@ All recipes run from the repository root; `just` itself is provided by the
 |--------|------|-------|
 | `just` (default) | `just --list` | lists all recipes |
 | `just init` | `tofu -chdir=tofu/scaleway init -backend-config=backend.hcl` | one-time, after `backend.hcl` is filled in |
-| `just up n="1"` | `tofu -chdir=tofu/scaleway apply -var node_count={{n}}` | use before a class; first apply needs `n >= 1` |
-| `just scale n` | `tofu -chdir=tofu/scaleway apply -var node_count={{n}}` | explicit node count, no default |
-| `just down` | `tofu -chdir=tofu/scaleway apply -var node_count=0` | between classes |
+| `just up n="1"` | two applies: `apply -target=scaleway_k8s_pool.main -var node_count={{n}}`, then `apply -var node_count={{n}}` | use before a class; pool first (the helm provider can't reach the API without it), then a full apply reconciles Argo CD |
+| `just scale n` | same two applies as `just up n` | explicit node count, no default |
+| `just down` | one targeted apply: `apply -target=scaleway_k8s_pool.main -var node_count=0` | between classes; deletes the pool (Kapsule rejects `size = 0`) |
 | `just destroy` | `tofu -chdir=tofu/scaleway destroy` | end of module; state bucket is kept |
 | `just kubeconfig` | writes `./kubeconfig` from the `kubeconfig` tofu output, `chmod 600` | prints the `export KUBECONFIG=...` line to run yourself |
 | `just retarget url=<origin, as https>` | rewrites every occurrence of the old `repoURL` across `gitops/apps/*.yaml`, `tofu/**/*.tf`, `tofu/**/*.example` to `url` | see below |
@@ -18,6 +18,9 @@ All recipes run from the repository root; `just` itself is provided by the
 | `just kind-up name="class-local"` | `kind create cluster` (if absent) + `tofu -chdir=tofu/kind init`/`apply` | see [Local testing with kind](../local-testing.md) |
 | `just kind-down name="class-local"` | `kind delete cluster` + removes `tofu/kind`'s local state/kubeconfig | |
 | `just lint` | `tofu fmt -check`, `tofu validate` on every root/module, `kustomize build \| kubeconform` on every workload, `kubeconform` on `gitops/apps/*.yaml` | CI-style check, no cluster needed |
+
+Every `tofu apply` above prompts for confirmation; set
+`TF_CLI_ARGS_apply=-auto-approve` to run non-interactively.
 
 ## `retarget`
 

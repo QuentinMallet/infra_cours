@@ -3,8 +3,8 @@
 This repository is a reusable template for running a Kubernetes class: one
 OpenTofu apply stands up a Scaleway Kapsule cluster and installs Argo CD
 into it; Argo CD then takes over and syncs the actual class workloads from
-this same repository via GitOps. Between classes the node pool scales to 0
-(no instance cost); before a class it scales back up. At the end of the
+this same repository via GitOps. Between classes the node pool is deleted
+(no instance cost); before a class it's recreated. At the end of the
 module the whole cluster is destroyed.
 
 ## Architecture

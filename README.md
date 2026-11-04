@@ -2,8 +2,8 @@
 
 Reusable template for teaching classes: OpenTofu provisions a Scaleway
 Kapsule cluster and installs Argo CD into it; Argo CD then syncs the actual
-class workloads from this repo via GitOps. The node pool scales to 0 between
-classes and back to N before one; the cluster is destroyed at the end of the
+class workloads from this repo via GitOps. The node pool is deleted between
+classes and recreated before one; the cluster is destroyed at the end of the
 module.
 
 ## Layout

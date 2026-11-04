@@ -18,6 +18,31 @@ repository. A private repo (or a repo renamed/moved without updating
 Fix: make the repository public, or run `just retarget` again with the
 correct URL. See [Starting a new class](../getting-started/new-class.md).
 
+## `kubectl`, `just ui`, `just password` fail between classes
+
+With the node pool deleted (`just down`, or any class break), the cluster
+status is `pool_required` and the API server is unreachable: the API
+server's DNS name stops resolving and `kubectl` commands time out
+(`i/o timeout`). This is expected — there is no node to run anything on,
+so there is nothing to reach. Run `just up n` first — see [Scaling between
+classes](../lifecycle/scaling.md).
+
+## Pods stuck `Terminating` right after `just up`
+
+For a minute or two after the pool comes back, `kubectl get pods -A` can
+still show pods that belonged to the previous (deleted) node as
+`Terminating`. They clear once Kubernetes garbage-collects the old `Node`
+object — no action needed, just wait.
+
+## `-var target_revision=<branch>` doesn't change what `demo` runs
+
+Every file under `gitops/apps/*.yaml` hardcodes `spec.source.targetRevision:
+master` (see `gitops/apps/demo.yaml`). Overriding `target_revision` on
+`tofu apply` only changes which revision the *root* Application tracks —
+child Applications such as `demo` still sync from `master` unless their
+own `targetRevision` is edited too. See [Starting a new
+class](../getting-started/new-class.md).
+
 ## kind cluster fails to start on NixOS
 
 If using the `tehcyx/kind` OpenTofu provider directly (rather than the
