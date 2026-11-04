@@ -55,6 +55,33 @@ kind](../local-testing.md)); if you hit this, check you're still going
 through `just kind-up` and not a raw `tofu apply` against a `kind_cluster`
 resource.
 
+## `tofu apply` fails with "cannot re-use a name that is still in use"
+
+A plain `tofu -chdir=tofu/scaleway apply` (not `just up`) while the node pool
+is deleted refreshes the helm provider's state for `helm_release.argocd` and
+`helm_release.root`. With the Kapsule API unreachable, the provider reports
+both as gone and drops them from state, even though the underlying Helm
+release secrets still exist in etcd. The next install then collides with
+them. Always change `node_count` through `just up`/`just down` (never a bare
+`tofu apply` while scaled down — see [Variables
+reference](variables.md)). To recover: bring the pool back up (`just up`),
+then re-import both releases while it's up:
+
+```sh
+tofu -chdir=tofu/scaleway import module.argocd.helm_release.argocd argocd/argocd
+tofu -chdir=tofu/scaleway import module.argocd.helm_release.root argocd/root
+```
+
+## Anyone who can push to the tracked branch has cluster-admin
+
+Argo CD's `default` `AppProject` (the one every Application in this template
+uses) permits deploying any Kubernetes resource kind from any namespace.
+Since Applications sync automatically from `gitops/` on the tracked
+`target_revision`, push access to that branch is equivalent to cluster-admin
+on the Kapsule cluster. Don't give students write access to the tracked
+branch — have them work from forks or feature branches reviewed before
+merge.
+
 ## kubectl / argocd commands hit the wrong cluster
 
 Both `tofu/scaleway` and `tofu/kind` write their own kubeconfig
