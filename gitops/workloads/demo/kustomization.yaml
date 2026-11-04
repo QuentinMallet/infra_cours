@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: demo
+
+resources:
+  - deployment.yaml
+  - service.yaml
+
+# Teachers: change the class's workload here. Bump newTag (or point
+# newName/newTag at a different image) and push to the tracked revision —
+# Argo CD's automated sync (prune + selfHeal) picks it up on its own.
+images:
+  - name: nginxinc/nginx-unprivileged
+    newTag: "1.27"

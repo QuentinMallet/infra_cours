@@ -5,3 +5,22 @@
 .agent-kb
 CLAUDE.md
 AGENTS.md
+
+# OpenTofu / Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+kubeconfig
+*.tfvars
+backend.hcl
+
+# Child modules re-resolve providers from the calling root; their own lock
+# file is never used.
+tofu/modules/**/.terraform.lock.hcl
+
+# direnv
+.direnv/
+
+# mdBook
+docs/book/
+result
