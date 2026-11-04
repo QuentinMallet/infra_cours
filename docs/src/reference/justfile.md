@@ -11,7 +11,7 @@ All recipes run from the repository root; `just` itself is provided by the
 | `just scale n` | same two applies as `just up n` | explicit node count, no default |
 | `just down` | one targeted apply: `apply -target=scaleway_k8s_pool.main -var node_count=0` | between classes; deletes the pool (Kapsule rejects `size = 0`) |
 | `just destroy` | `tofu -chdir=tofu/scaleway destroy` | end of module; state bucket is kept |
-| `just kubeconfig` | writes `./kubeconfig` from the `kubeconfig` tofu output, `chmod 600` | prints the `export KUBECONFIG=...` line to run yourself |
+| `just kubeconfig` | writes `./kubeconfig` from the `kubeconfig` tofu output via a mode-600 temp file + `mv` | prints the `export KUBECONFIG=...` line to run yourself |
 | `just retarget url=<origin, as https>` | rewrites every occurrence of the old `repoURL` across `gitops/apps/*.yaml`, `tofu/**/*.tf`, `tofu/**/*.example`, `tofu/**/*.tfvars` to `url` | see below |
 | `just ui` | `kubectl -n argocd port-forward svc/argocd-server 8080:80` | Argo CD UI at `http://localhost:8080` |
 | `just password` | reads and base64-decodes the `argocd-initial-admin-secret` Secret | initial `admin` password |
