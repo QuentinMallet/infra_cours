@@ -38,11 +38,11 @@ kubeconfig:
     echo "export KUBECONFIG=$(pwd)/kubeconfig"
 
 # Point every Argo CD source at this clone's repo (default: the origin remote, as https).
-retarget url=`git remote get-url origin | sed -E 's#^git@([^:]+):#https://\1/#'`:
+retarget url=`git remote get-url origin | sed -E 's#^(ssh://)?git@([^:/]+)[:/]#https://\2/#'`:
     #!/usr/bin/env sh
     set -eu
-    old=$(sed -n 's/^ *repoURL: *//p' gitops/apps/demo.yaml | head -n1)
-    grep -rlF "$old" gitops tofu --include='*.yaml' --include='*.tf' --include='*.example' | xargs sed -i "s#$old#{{ url }}#g"
+    old=$(sed -n 's/^ *repoURL: *//p' gitops/apps/demo.yaml | head -n1 | tr -d '\r' | sed -E "s/^[\"']//; s/[\"']\$//")
+    grep -rlF "$old" gitops tofu --include='*.yaml' --include='*.tf' --include='*.example' --include='*.tfvars' | OLD="$old" NEW="{{ url }}" xargs -r perl -pi -e 's/\Q$ENV{OLD}\E/$ENV{NEW}/g'
     echo "repo URL: $old -> {{ url }} (commit and push before applying)"
 
 # Port-forward the Argo CD UI to http://localhost:8080.
