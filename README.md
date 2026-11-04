@@ -21,7 +21,7 @@ gitops/
   apps/                   # one Argo CD Application manifest per class workload
   workloads/demo/         # kustomize-able manifests for the demo workload
 
-docs/runbook.md           # step-by-step operational runbook
+docs/                     # mdBook guide (nix build .#doc)
 ```
 
 `tofu/scaleway` and `tofu/kind` both call the same `tofu/modules/argocd`
@@ -54,5 +54,9 @@ just kind-up
 just kind-down
 ```
 
-See `docs/runbook.md` for prerequisites, the one-time Scaleway setup, and
-cost notes; see `gitops/README.md` for adding a new class workload.
+See the book for prerequisites, the one-time Scaleway setup, cost notes,
+and adding a new class workload:
+
+```sh
+nix build .#doc && xdg-open result/index.html     # or: mdbook serve docs
+```

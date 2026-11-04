@@ -16,3 +16,7 @@ backend.hcl
 
 # direnv
 .direnv/
+
+# mdBook
+docs/book/
+result

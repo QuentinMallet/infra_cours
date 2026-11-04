@@ -1,0 +1,6 @@
+[book]
+title = "Class cluster template"
+src = "src"
+
+[build]
+build-dir = "book"

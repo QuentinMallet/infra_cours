@@ -32,7 +32,16 @@
             just
             jq
             yq-go
+            mdbook
           ];
+        };
+
+        packages.doc = pkgs.stdenvNoCC.mkDerivation {
+          name = "class-template-doc";
+          src = ./docs;
+          nativeBuildInputs = [ pkgs.mdbook ];
+          buildPhase = "mdbook build";
+          installPhase = "cp -r book $out";
         };
 
         formatter = pkgs.nixfmt-rfc-style or pkgs.nixfmt;
