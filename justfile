@@ -47,13 +47,16 @@ password:
     echo
 
 # Bring up a local kind cluster running the same argocd module.
-kind-up:
-    tofu -chdir=tofu/kind init
-    tofu -chdir=tofu/kind apply
+kind-up name="class-local":
+    kind get clusters | grep -qx "{{ name }}" || kind create cluster --name "{{ name }}" --kubeconfig tofu/kind/kubeconfig
+    tofu -chdir=tofu/kind init -input=false
+    tofu -chdir=tofu/kind apply -var cluster_name="{{ name }}"
+    @echo "export KUBECONFIG=$(pwd)/tofu/kind/kubeconfig"
 
-# Tear down the local kind cluster.
-kind-down:
-    tofu -chdir=tofu/kind destroy
+# Delete the local kind cluster and its tofu state.
+kind-down name="class-local":
+    kind delete cluster --name "{{ name }}" --kubeconfig tofu/kind/kubeconfig
+    rm -f tofu/kind/terraform.tfstate tofu/kind/terraform.tfstate.backup tofu/kind/kubeconfig
 
 # Format check, tofu validate on every root/module, and manifest validation.
 lint:

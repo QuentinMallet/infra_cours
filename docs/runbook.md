@@ -88,11 +88,17 @@ The state bucket is not deleted; remove it by hand with
 # local worktree
 git push
 
-just kind-up               # local kind cluster, same argocd module as Scaleway
-just kubeconfig            # not needed for kind: KUBECONFIG is tofu/kind/kubeconfig
+just kind-up               # kind CLI creates the cluster, tofu installs the same argocd module
 export KUBECONFIG=$(pwd)/tofu/kind/kubeconfig
-just kind-down
+just ui                    # same UI/password recipes as on Scaleway
+just kind-down             # deletes the cluster and the local tofu state
 ```
+
+To test a branch before merging it, apply with
+`tofu -chdir=tofu/kind apply -var target_revision=<branch>` (the branch must
+be pushed). The cluster is created by the kind CLI rather than the
+`tehcyx/kind` provider because the provider's bundled kind cannot start a
+node on NixOS (no `/lib/modules`); see `tofu/kind/main.tf`.
 
 ## Changing the class's workload
 

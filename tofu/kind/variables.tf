@@ -4,6 +4,12 @@ variable "cluster_name" {
   default     = "class-local"
 }
 
+variable "kubeconfig_path" {
+  description = "Kubeconfig written by `kind create cluster --kubeconfig` (see `just kind-up`)."
+  type        = string
+  default     = "kubeconfig"
+}
+
 variable "repo_url" {
   description = "Git repository URL that Argo CD syncs Applications from. Push your changes before `just kind-up` — Argo CD pulls from this remote, not the local worktree."
   type        = string

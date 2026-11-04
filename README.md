@@ -15,7 +15,7 @@ justfile                 # init / up / scale / down / destroy / kubeconfig / ui 
 tofu/
   modules/argocd/         # installs argo-cd + a root Application (app-of-apps)
   scaleway/               # root module: Kapsule cluster + argocd module (S3 backend)
-  kind/                   # root module: local kind cluster + the SAME argocd module
+  kind/                   # root module: the SAME argocd module on a kind CLI cluster
 
 gitops/
   apps/                   # one Argo CD Application manifest per class workload
