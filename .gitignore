@@ -5,3 +5,14 @@
 .agent-kb
 CLAUDE.md
 AGENTS.md
+
+# OpenTofu / Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+kubeconfig
+*.tfvars
+backend.hcl
+
+# direnv
+.direnv/
