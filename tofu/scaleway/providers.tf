@@ -5,7 +5,7 @@ provider "scaleway" {
 
 # Credentials (SCW_ACCESS_KEY / SCW_SECRET_KEY / SCW_DEFAULT_PROJECT_ID) and
 # the s3 backend's AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY are read from the
-# environment; see docs/runbook.md.
+# environment; see docs/src/getting-started/scaleway-setup.md.
 
 provider "helm" {
   kubernetes = {
