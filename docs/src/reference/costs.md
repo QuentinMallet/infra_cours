@@ -20,7 +20,9 @@
   workloads](../workloads.md#keep-workloads-clusterip-only-no-pvcs). If a
   workload truly needs external access, prefer `kubectl port-forward` for
   class demos over provisioning a real LoadBalancer.
-- `just destroy` removes the cluster, pool, and private network
-  (`delete_additional_resources = true`) but **not** the Object Storage
+- `just destroy` removes the cluster, pool, and private network through
+  OpenTofu's normal destroy dependency graph; `delete_additional_resources
+  = true` separately cleans up cluster-created extras OpenTofu doesn't
+  track (`LoadBalancer`s, PVC block volumes) but **not** the Object Storage
   state bucket — see [Destroying](../lifecycle/destroy.md) for how to
   remove that by hand if it's no longer needed.
