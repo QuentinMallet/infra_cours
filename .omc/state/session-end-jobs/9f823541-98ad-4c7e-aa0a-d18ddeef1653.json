@@ -1,0 +1,259 @@
+{
+  "version": 1,
+  "jobId": "53dd7be9-368f-4b02-9182-37ca353de4c6",
+  "sessionId": "9f823541-98ad-4c7e-aa0a-d18ddeef1653",
+  "scopeKey": "6c54f8feb4b393f84e20b5daafd9797055ca10e17a22eb26e1b3021e00adb5a5",
+  "revision": 0,
+  "createdAt": "2026-11-04T09:13:25.346Z",
+  "updatedAt": "2026-11-04T09:13:25.346Z",
+  "producerGraceExpiresAt": "2026-11-04T09:13:55.348Z",
+  "bestEffortDeadlineAt": "2026-11-04T09:14:48.348Z",
+  "producers": {
+    "core": {
+      "state": "prepared",
+      "intentKey": "c11c681dda5c4cc6a0b75cb46ac9b436c06b60369f3dc89b3cba75f37c9696a1",
+      "payloadDigest": "c11c681dda5c4cc6a0b75cb46ac9b436c06b60369f3dc89b3cba75f37c9696a1"
+    },
+    "wiki": {
+      "state": "absent"
+    }
+  },
+  "actions": {
+    "foreground-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "36a659ac6885bc39c8b73e4898f1f00ba2d8b487d0a6759722b9039d2335437f",
+      "payload": {
+        "transcriptPath": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+        "cwd": "/home/urist/Documents/boulot/infra_cours",
+        "reason": "prompt_input_exit",
+        "input": {
+          "session_id": "9f823541-98ad-4c7e-aa0a-d18ddeef1653",
+          "transcript_path": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+          "cwd": "/home/urist/Documents/boulot/infra_cours",
+          "scratchpad_dir": "/tmp/claude-1000/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653/scratchpad",
+          "hook_event_name": "SessionEnd",
+          "reason": "prompt_input_exit"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {
+          "tmux": "/run/user/1000/tmux-1000/default,2772065,0",
+          "tmuxPane": "%24"
+        }
+      },
+      "budgetMs": 9000
+    },
+    "wiki-capture": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "7519a3c3d5b26eb13a7ec986fcee1c0d47702d134a2b96154c1496ee5f71f82b",
+      "payload": {
+        "transcriptPath": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+        "cwd": "/home/urist/Documents/boulot/infra_cours",
+        "reason": "prompt_input_exit",
+        "input": {
+          "session_id": "9f823541-98ad-4c7e-aa0a-d18ddeef1653",
+          "transcript_path": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+          "cwd": "/home/urist/Documents/boulot/infra_cours",
+          "scratchpad_dir": "/tmp/claude-1000/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653/scratchpad",
+          "hook_event_name": "SessionEnd",
+          "reason": "prompt_input_exit"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {
+          "tmux": "/run/user/1000/tmux-1000/default,2772065,0",
+          "tmuxPane": "%24"
+        }
+      },
+      "budgetMs": 9000
+    },
+    "team-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "bdbf97c376fe5a2c196027e15c090f37a761b4a23db5143766fd506890a62adf",
+      "payload": {
+        "transcriptPath": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+        "cwd": "/home/urist/Documents/boulot/infra_cours",
+        "reason": "prompt_input_exit",
+        "input": {
+          "session_id": "9f823541-98ad-4c7e-aa0a-d18ddeef1653",
+          "transcript_path": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+          "cwd": "/home/urist/Documents/boulot/infra_cours",
+          "scratchpad_dir": "/tmp/claude-1000/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653/scratchpad",
+          "hook_event_name": "SessionEnd",
+          "reason": "prompt_input_exit"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {
+          "tmux": "/run/user/1000/tmux-1000/default,2772065,0",
+          "tmuxPane": "%24"
+        }
+      },
+      "budgetMs": 9000
+    },
+    "python-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "b0843b94fb6ef2ec6ca0cedc02e068c972f2ece882431e163c53d149ce75a007",
+      "payload": {
+        "transcriptPath": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+        "cwd": "/home/urist/Documents/boulot/infra_cours",
+        "reason": "prompt_input_exit",
+        "input": {
+          "session_id": "9f823541-98ad-4c7e-aa0a-d18ddeef1653",
+          "transcript_path": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+          "cwd": "/home/urist/Documents/boulot/infra_cours",
+          "scratchpad_dir": "/tmp/claude-1000/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653/scratchpad",
+          "hook_event_name": "SessionEnd",
+          "reason": "prompt_input_exit"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {
+          "tmux": "/run/user/1000/tmux-1000/default,2772065,0",
+          "tmuxPane": "%24"
+        }
+      },
+      "budgetMs": 9000
+    },
+    "reply-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "24e86ebc650835466ae03540dd2667b9ce2c2f137ef019ab78848502cfaf3428",
+      "payload": {
+        "transcriptPath": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+        "cwd": "/home/urist/Documents/boulot/infra_cours",
+        "reason": "prompt_input_exit",
+        "input": {
+          "session_id": "9f823541-98ad-4c7e-aa0a-d18ddeef1653",
+          "transcript_path": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+          "cwd": "/home/urist/Documents/boulot/infra_cours",
+          "scratchpad_dir": "/tmp/claude-1000/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653/scratchpad",
+          "hook_event_name": "SessionEnd",
+          "reason": "prompt_input_exit"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {
+          "tmux": "/run/user/1000/tmux-1000/default,2772065,0",
+          "tmuxPane": "%24"
+        }
+      },
+      "budgetMs": 9000
+    },
+    "callback": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "78d7c0371647fde74ad0cba58f536ffceb8771d3b7ae5f55bca98c162de2f3bc",
+      "payload": {
+        "transcriptPath": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+        "cwd": "/home/urist/Documents/boulot/infra_cours",
+        "reason": "prompt_input_exit",
+        "input": {
+          "session_id": "9f823541-98ad-4c7e-aa0a-d18ddeef1653",
+          "transcript_path": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+          "cwd": "/home/urist/Documents/boulot/infra_cours",
+          "scratchpad_dir": "/tmp/claude-1000/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653/scratchpad",
+          "hook_event_name": "SessionEnd",
+          "reason": "prompt_input_exit"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {
+          "tmux": "/run/user/1000/tmux-1000/default,2772065,0",
+          "tmuxPane": "%24"
+        }
+      },
+      "budgetMs": 2000
+    },
+    "notification": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "da715d59631225649a0c1fc562663bb12b2ebabeed532031416b63bc7553b0fb",
+      "payload": {
+        "transcriptPath": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+        "cwd": "/home/urist/Documents/boulot/infra_cours",
+        "reason": "prompt_input_exit",
+        "input": {
+          "session_id": "9f823541-98ad-4c7e-aa0a-d18ddeef1653",
+          "transcript_path": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+          "cwd": "/home/urist/Documents/boulot/infra_cours",
+          "scratchpad_dir": "/tmp/claude-1000/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653/scratchpad",
+          "hook_event_name": "SessionEnd",
+          "reason": "prompt_input_exit"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {
+          "tmux": "/run/user/1000/tmux-1000/default,2772065,0",
+          "tmuxPane": "%24"
+        }
+      },
+      "budgetMs": 2000
+    },
+    "openclaw": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "188f3c4f117b97764e3b7741b7f60d63a3b71c6ce228452267fd19a34e746c03",
+      "payload": {
+        "transcriptPath": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+        "cwd": "/home/urist/Documents/boulot/infra_cours",
+        "reason": "prompt_input_exit",
+        "input": {
+          "session_id": "9f823541-98ad-4c7e-aa0a-d18ddeef1653",
+          "transcript_path": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+          "cwd": "/home/urist/Documents/boulot/infra_cours",
+          "scratchpad_dir": "/tmp/claude-1000/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653/scratchpad",
+          "hook_event_name": "SessionEnd",
+          "reason": "prompt_input_exit"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {
+          "tmux": "/run/user/1000/tmux-1000/default,2772065,0",
+          "tmuxPane": "%24"
+        }
+      },
+      "budgetMs": 2000
+    },
+    "spawn-next": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "d61f5694aaf27971ba2d6f001ee80b9a57bbf5df9f65f1a849690aa653c2c96f",
+      "payload": {
+        "transcriptPath": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+        "cwd": "/home/urist/Documents/boulot/infra_cours",
+        "reason": "prompt_input_exit",
+        "input": {
+          "session_id": "9f823541-98ad-4c7e-aa0a-d18ddeef1653",
+          "transcript_path": "/home/urist/.claude/projects/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653.jsonl",
+          "cwd": "/home/urist/Documents/boulot/infra_cours",
+          "scratchpad_dir": "/tmp/claude-1000/-home-urist-Documents-boulot-infra-cours/9f823541-98ad-4c7e-aa0a-d18ddeef1653/scratchpad",
+          "hook_event_name": "SessionEnd",
+          "reason": "prompt_input_exit"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {
+          "tmux": "/run/user/1000/tmux-1000/default,2772065,0",
+          "tmuxPane": "%24"
+        }
+      },
+      "budgetMs": 2000
+    }
+  },
+  "owner": null,
+  "phase": "collecting"
+}
