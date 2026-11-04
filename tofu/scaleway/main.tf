@@ -29,22 +29,26 @@ resource "scaleway_k8s_cluster" "main" {
   }
 }
 
-# The node pool scales to 0 between classes: Kapsule's mutualized control
-# plane is free, and a pool with size = 0 is allowed (min_size then defaults
-# to 0, see variable node_count). The *first* apply needs node_count >= 1,
-# because the argocd module's helm_release resources are created with
-# wait = true and need somewhere to schedule pods. Later applies that only
-# flip node_count to 0 (`just down`) leave the already-installed helm
-# releases untouched; they don't get re-applied just because the pool shrank.
+# Between classes the pool is deleted, not resized: the Kapsule API rejects a
+# pool size of 0 ("A kapsule cluster can't have less than 1 nodes") but does
+# allow deleting a cluster's only pool. The control plane (free when
+# mutualized) keeps etcd, so Argo CD and every synced object survive and are
+# rescheduled when `just up` recreates the pool.
+#
+# The *first* apply needs node_count >= 1: the argocd module's helm releases
+# use wait = true and need a node to schedule on. Later applies that only
+# change node_count do not touch the helm releases.
 resource "scaleway_k8s_pool" "main" {
+  count = var.node_count > 0 ? 1 : 0
+
   cluster_id  = scaleway_k8s_cluster.main.id
   region      = var.region
   zone        = var.zone
   name        = "${var.cluster_name}-pool"
   node_type   = var.node_type
   size        = var.node_count
-  min_size    = 0
-  max_size    = max(var.node_count, 1)
+  min_size    = var.node_count
+  max_size    = var.node_count
   autoscaling = false
   autohealing = true
   # No create_before_destroy: with a fixed name the replacement pool would

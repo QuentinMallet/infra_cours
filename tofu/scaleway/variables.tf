@@ -22,7 +22,7 @@ variable "node_type" {
 }
 
 variable "node_count" {
-  description = "Number of nodes in the pool. Set to 0 to scale the pool down between classes."
+  description = "Number of nodes in the pool. 0 deletes the pool between classes (the cluster and Argo CD state are kept)."
   type        = number
   default     = 1
 

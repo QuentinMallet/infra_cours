@@ -7,17 +7,24 @@ default:
 init:
     tofu -chdir=tofu/scaleway init -backend-config=backend.hcl
 
-# Apply with n nodes (default 1). Use before a class.
+# Two steps on purpose: while no pool exists the Kapsule API server is
+# unreachable, and the helm provider reports the Argo CD releases as deleted.
+# Creating the pool first (targeted) brings the API back, so the full apply
+# sees the real releases instead of trying to reinstall them.
+# Bring the pool up to n nodes (default 1), then reconcile Argo CD.
 up n="1":
+    tofu -chdir=tofu/scaleway apply -target=scaleway_k8s_pool.main -var node_count={{ n }}
     tofu -chdir=tofu/scaleway apply -var node_count={{ n }}
 
-# Apply with an explicit node count.
-scale n:
-    tofu -chdir=tofu/scaleway apply -var node_count={{ n }}
+# Same as up, with an explicit node count.
+scale n: (up n)
 
-# Scale the pool to 0 between classes. Control plane stays, nothing to pay for.
+# Kapsule refuses a pool of size 0, so the pool is deleted instead. Targeted
+# so the helm releases are not refreshed; the control plane keeps etcd, so
+# Argo CD and the synced workloads come back with `just up`.
+# Delete the node pool between classes (no node cost).
 down:
-    tofu -chdir=tofu/scaleway apply -var node_count=0
+    tofu -chdir=tofu/scaleway apply -target=scaleway_k8s_pool.main -var node_count=0
 
 # Tear everything down at the end of the module. The state bucket is kept.
 destroy:
