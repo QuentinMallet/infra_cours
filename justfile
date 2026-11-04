@@ -13,6 +13,7 @@ init:
 # sees the real releases instead of trying to reinstall them.
 # Bring the pool up to n nodes (default 1), then reconcile Argo CD.
 up n="1":
+    @test {{ n }} -ge 1 || { echo "node_count must be >= 1; use \`just down\` to remove the pool" >&2; exit 1; }
     tofu -chdir=tofu/scaleway apply -target=scaleway_k8s_pool.main -var node_count={{ n }}
     tofu -chdir=tofu/scaleway apply -var node_count={{ n }}
 
