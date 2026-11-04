@@ -34,6 +34,9 @@ resource "helm_release" "argocd" {
   ]
 }
 
+# No cascade finalizer on the root Application itself: `just destroy`
+# uninstalls root first, and it must not block waiting to cascade-delete
+# every child Application.
 resource "helm_release" "root" {
   name      = "root"
   namespace = "argocd"
