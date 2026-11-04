@@ -14,6 +14,10 @@ kubeconfig
 *.tfvars
 backend.hcl
 
+# Child modules re-resolve providers from the calling root; their own lock
+# file is never used.
+tofu/modules/**/.terraform.lock.hcl
+
 # direnv
 .direnv/
 
