@@ -28,16 +28,10 @@ just retarget https://github.com/me/my-class.git
 
 This rewrites the old `repoURL` everywhere it appears: `gitops/apps/*.yaml`,
 the `repo_url` default in both `tofu/scaleway/variables.tf` and
-`tofu/kind/variables.tf`, and `tofu/scaleway/terraform.tfvars.example`. See
-the [justfile reference](../reference/justfile.md#retarget) for exactly
-what it touches.
-
-Because `terraform.tfvars.example` is one of the rewritten files, re-copy it
-if you already had a `terraform.tfvars`:
-
-```sh
-cp tofu/scaleway/terraform.tfvars.example tofu/scaleway/terraform.tfvars
-```
+`tofu/kind/variables.tf`, `tofu/scaleway/terraform.tfvars.example`, and —
+if present — your own gitignored `tofu/scaleway/terraform.tfvars`. See the
+[justfile reference](../reference/justfile.md#retarget) for exactly what it
+touches.
 
 ## 4. Commit and publish the change
 
