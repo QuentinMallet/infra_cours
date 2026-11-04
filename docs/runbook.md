@@ -37,8 +37,17 @@ cp tofu/scaleway/backend.hcl.example tofu/scaleway/backend.hcl        # set buck
 cp tofu/scaleway/terraform.tfvars.example tofu/scaleway/terraform.tfvars
 ```
 
-In `terraform.tfvars`, set `repo_url` to the URL of *your* clone of this
-repo (Argo CD needs to reach it over `targetRevision`, default `master`).
+Point Argo CD at *your* clone (it must be public). This rewrites the repo URL
+in `gitops/apps/*.yaml`, the tofu defaults and the tfvars example; it defaults
+to the `origin` remote:
+
+```sh
+just retarget                                  # or: just retarget https://github.com/me/my-class.git
+cp tofu/scaleway/terraform.tfvars.example tofu/scaleway/terraform.tfvars   # re-copy after retarget
+git commit -am "chore: retarget class repo" && git push
+```
+
+Argo CD tracks `target_revision` (default `master`).
 
 ## Day-to-day
 
