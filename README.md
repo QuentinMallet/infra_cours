@@ -1,0 +1,58 @@
+# infra_cours
+
+Reusable template for teaching classes: OpenTofu provisions a Scaleway
+Kapsule cluster and installs Argo CD into it; Argo CD then syncs the actual
+class workloads from this repo via GitOps. The node pool scales to 0 between
+classes and back to N before one; the cluster is destroyed at the end of the
+module.
+
+## Layout
+
+```
+flake.nix               # nix develop shell: tofu, kubectl, helm, argocd, kind, ...
+justfile                 # init / up / scale / down / destroy / kubeconfig / ui / lint
+
+tofu/
+  modules/argocd/         # installs argo-cd + a root Application (app-of-apps)
+  scaleway/               # root module: Kapsule cluster + argocd module (S3 backend)
+  kind/                   # root module: local kind cluster + the SAME argocd module
+
+gitops/
+  apps/                   # one Argo CD Application manifest per class workload
+  workloads/demo/         # kustomize-able manifests for the demo workload
+
+docs/runbook.md           # step-by-step operational runbook
+```
+
+`tofu/scaleway` and `tofu/kind` both call the same `tofu/modules/argocd`
+module, so a workstation `kind` cluster exercises exactly the same Argo CD
+install path as the real Scaleway cluster.
+
+## Quick start
+
+```sh
+nix develop            # or: direnv allow
+
+cp tofu/scaleway/backend.hcl.example tofu/scaleway/backend.hcl        # fill in bucket
+cp tofu/scaleway/terraform.tfvars.example tofu/scaleway/terraform.tfvars
+
+just init
+just up 1               # first apply needs >= 1 node
+just kubeconfig && export KUBECONFIG=$(pwd)/kubeconfig
+just ui                 # http://localhost:8080
+just password
+
+just down               # between classes
+just up 2               # before the next one
+just destroy            # end of the module
+```
+
+Local-only testing, no Scaleway account needed:
+
+```sh
+just kind-up
+just kind-down
+```
+
+See `docs/runbook.md` for prerequisites, the one-time Scaleway setup, and
+cost notes; see `gitops/README.md` for adding a new class workload.
