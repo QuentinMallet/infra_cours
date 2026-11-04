@@ -64,8 +64,9 @@ resource "helm_release" "root" {
           }
           syncPolicy = {
             automated = {
-              prune    = true
-              selfHeal = true
+              prune      = true
+              selfHeal   = true
+              allowEmpty = true
             }
           }
         }
